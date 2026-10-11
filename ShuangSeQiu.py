@@ -1,9 +1,12 @@
 #!/data/data/com.termux/files/usr/bin/python
 import random, math, sys, os, smtplib
 from email.mime.text import MIMEText
-from datetime import date
+from datetime import date, datetime, timezone, timedelta
 
 now = date.today().timetuple()[:3]
+utc_now = datetime.now(timezone.utc)
+bj_now = datetime.now(timezone(timedelta(hours=8)))
+
 seed = math.prod(now)
 random.seed(seed)
 
@@ -43,18 +46,18 @@ def push_email(title, lst, push=True):
     html_body = f"""
 <html>
   <body>
-    <h3>{date.today()}</h3>
+    <h4>{bj_now.strftime('%Y-%m-%d %H:%M:%S')}</h4>
+    <h5>UTC : {utc_now.strftime('%Y-%m-%d %H:%M:%S')}</h5>
     <div style="text-align: center;">
       {html_table}
     </div>
   </body>
 </html>"""
 
-    #print(html_body)
-    sender = os.environ.get('SENDER')  # 你的QQ邮箱
-    auth_code = os.environ.get('MAIL_PASSWORD') # 改为从环境变量获取，不再明文写密码
-    receiver = os.environ.get('RECEIVER')  # 收件人
-    print(sender, auth_code, receiver)
+    # print(html_body)
+    sender = os.environ.get("SENDER")  # 你的QQ邮箱
+    auth_code = os.environ.get("MAIL_PASSWORD")  # 改为从环境变量获取，不再明文写密码
+    receiver = os.environ.get("RECEIVER")  # 收件人
     msg = MIMEText(html_body, "html", "utf-8")
     msg["From"] = sender
     msg["To"] = receiver
@@ -64,7 +67,7 @@ def push_email(title, lst, push=True):
             server.login(sender, auth_code)
             server.sendmail(sender, receiver, msg.as_string())
 
-        #print("发送成功",lst)
+        # print("发送成功",lst)
 
 
 ret = shuangSeQiu()

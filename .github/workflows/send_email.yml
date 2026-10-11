@@ -4,7 +4,7 @@ name: 每天定时发送双色球
 on:
   schedule:
     # 每天北京时间 09:00 自动执行 (GitHub使用的是UTC时间，09:00北京时间 = 01:00 UTC)
-    - cron: '0 1 * * *'
+    - cron: '0 22 * * *'
   workflow_dispatch: # 允许你手动点击按钮运行一次，用来测试
 
 jobs:
