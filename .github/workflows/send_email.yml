@@ -21,7 +21,7 @@ jobs:
         python-version: '3.9'
         
     - name: 运行发送邮件脚本
-      run: ShuangSeQiu.py
+      run: python ShuangSeQiu.py
       env:
         # 把 GitHub 里的加密机密传入到 Python 环境变量中
         MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
