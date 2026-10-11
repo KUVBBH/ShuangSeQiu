@@ -1,0 +1,33 @@
+
+name: 每天定时发送双色球
+
+on:
+  schedule:
+    # 每天北京时间 09:00 自动执行 (GitHub使用的是UTC时间，09:00北京时间 = 01:00 UTC)
+    - cron: '0 1 * * *'
+  workflow_dispatch: # 允许你手动点击按钮运行一次，用来测试
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v2
+      
+    - name: 设置 Python 环境
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+        
+    - name: 安装依赖
+      run: |
+        pip install smtplib3
+        
+    - name: 运行发送邮件脚本
+      run: python lottery_email.py
+      env:
+        # 把 GitHub 里的加密机密传入到 Python 环境变量中
+        MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+        SENDER: ${{ secrets.SENDER }}
+        RECEIVER: ${{ secrets.RECEIVER }}
