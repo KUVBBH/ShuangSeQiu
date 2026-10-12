@@ -1,5 +1,5 @@
 
-name: 每天定时发送双色球
+name: SSQ Daily Mail
 
 on:
   schedule:
