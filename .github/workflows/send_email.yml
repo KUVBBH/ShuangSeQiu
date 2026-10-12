@@ -3,8 +3,8 @@ name: SSQ Daily Mail
 
 on:
   schedule:
-    - cron: '07 1 * * *'
-  workflow_dispatch:
+    - cron: '20 1 * * *'
+#  workflow_dispatch:
 
 jobs:
   build:
