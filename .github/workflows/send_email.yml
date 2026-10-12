@@ -2,7 +2,6 @@ name: 每天定时发送双色球
 
 on:
    schedule:
-    # 每天自动执行
     - cron: '45 0 * * *'
     workflow_dispatch: # 允许你手动点击按钮运行一次，用来测试
 
