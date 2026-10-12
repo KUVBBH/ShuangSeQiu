@@ -3,7 +3,7 @@ name: 每天定时发送双色球
 
 on:
   schedule:
-    - cron: '45 0 * * *'
+    - cron: '07 1 * * *'
   workflow_dispatch:
 
 jobs:
