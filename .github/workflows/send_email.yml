@@ -5,7 +5,7 @@ on:
   schedule:
     # 每天自动执行
     #- cron: '15 22 * * *'
-    - cron: '57 23 * * *'
+    - cron: '10 0 * * *'
   workflow_dispatch: # 允许你手动点击按钮运行一次，用来测试
 
 jobs:
