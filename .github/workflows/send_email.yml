@@ -19,7 +19,8 @@ jobs:
           python-version: '3.9'
 
       - name: 运行发送邮件脚本
-        run: python ShuangSeQiu.py
+        run: pip install jinja2
+        run: python ssq.py
         env:
           MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
           SENDER: ${{ secrets.SENDER }}
