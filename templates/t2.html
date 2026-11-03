@@ -70,6 +70,7 @@
   </style>
 </head>
 <body>
+    <h4>{{ '\u00A0' if s != 0 else bj_now.strftime('%Y-%m-%d %H:%M:%S')  }}</h4>
   <table>
     <thead>
       <tr>
@@ -82,7 +83,7 @@
       {% for value in lst %}
       <tr class="{{ 'row-even' if loop.index % 2 == 0 else 'row-odd' }}">
         <td class="col-index">
-          <span class="badge-index">第{{ loop.index }}注</span>
+          <span class="badge-index">第{{ loop.index + s }}注</span>
         </td>
         <td class="col-red">
           {% for red in value[:-1] %}

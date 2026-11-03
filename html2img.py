@@ -6,10 +6,12 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 import subprocess
 from weasyprint import HTML
 from itertools import batched
+import cv2, numpy
 
 now = date.today().timetuple()[:3]
 utc_now = datetime.now(timezone.utc)
 bj_now = datetime.now(timezone(timedelta(hours=8)))
+file_list = os.listdir("/storage/emulated/0/SSQ/.data")
 
 seed = math.prod(now)
 random.seed(seed)
@@ -20,7 +22,7 @@ BLUE = range(1, 16)
 try:
     TOTAL = int(sys.argv[1])
 except IndexError:
-    TOTAL = 100
+    TOTAL = 25
 
 
 def shuangSeQiu():
@@ -35,13 +37,13 @@ def shuangSeQiu():
     return l
 
 
-def html2img(inx, lst):
+def html2img(inx, lst, s):
     env = Environment(
         loader=FileSystemLoader("templates"),
         autoescape=select_autoescape(["html", "htm"]),
     )
     html_body = env.get_template("t2.html").render(
-        lst=lst,  # 二维列表，每项：[红球..., 蓝球]
+        lst=lst, bj_now=bj_now, s=s  # 二维列表，每项：[红球..., 蓝球]
     )
     # return html_body
     # 1. HTML → PDF
@@ -62,12 +64,27 @@ def html2img(inx, lst):
     )
 
 
+def img_size():
+    file_list = os.listdir("/storage/emulated/0/SSQ/.data")
+    for i in file_list:
+        if "png" in i:
+            img = cv2.imread(f"/storage/emulated/0/SSQ/.data/{i}")
+            cv2.imwrite(f"/storage/emulated/0/SSQ/{i}", img[200:900, 500:-500])
+            print(f"生成 : /strorage/emulated/0/SSQ/{i}")
+
+
+for i in file_list:
+    os.remove(f"/storage/emulated/0/SSQ/.data/{i}")
+    print(f"移除 : /storage/emulated/0/SSQ/.data/{i}")
 lst = shuangSeQiu()
+s = 0
 groups = list(batched(lst, 5))
 for i, v in enumerate(groups, 1):
-    ret = html2img(i, v)
+    html2img(i, v, s)
+    s += len(v)
     for j in v:
         print(j)
+img_size()
 
 # print("完成，生成 page_1.png")
 # os.system("clear")
